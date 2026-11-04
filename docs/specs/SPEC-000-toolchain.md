@@ -1,6 +1,6 @@
 # SPEC-000: Toolchain (Milestone 0)
 
-**Status:** In progress
+**Status:** Done
 **Plan:** `docs/superpowers/plans/2026-11-04-m0-toolchain.md`
 **Source:** `docs/ddo-pong-handoff.md`
 
@@ -47,16 +47,20 @@ M0 has no tables or systems, so `Tables` is empty and `tick` is a no-op until la
 
 ## Acceptance
 
-- [ ] Deleting `build/`, then configure, build and `ctest` pass for `debug`, `release` and `asan`, with no warnings from our targets.
-- [ ] `ctest --preset asan` fails on a deliberate heap overflow and on a deliberate signed overflow.
-- [ ] `cmake --workflow --preset tidy` reports no warnings, and does report a deliberate warning in a `src/` header.
-- [ ] A normal debug build does not run clang-tidy.
-- [ ] `build/debug/ddo_pong.exe` opens a window and exits with 0 when closed.
-- [ ] `#include <raylib.h>` fails to compile in `src/sim/` and `src/main.cpp`.
-- [ ] `clangd --check=src/main.cpp` finds the compilation database and reports no errors.
-- [ ] Zed started from the Start menu: go-to-definition, clang-tidy diagnostics and format-on-save work, and every task runs.
-- [ ] `clang-format --dry-run --Werror` is clean on `src/` and `tests/`.
+- [x] Deleting `build/`, then configure, build and `ctest` pass for `debug`, `release` and `asan`, with no warnings from our targets.
+- [x] `ctest --preset asan` fails on a deliberate heap overflow and on a deliberate signed overflow.
+- [x] `cmake --workflow --preset tidy` reports no warnings, and does report a deliberate warning in a `src/` header.
+- [x] A normal debug build does not run clang-tidy.
+- [x] `build/debug/ddo_pong.exe` opens a window and exits with 0 when closed.
+- [x] `#include <raylib.h>` fails to compile in `src/sim/` and `src/main.cpp`.
+- [x] clangd finds the compilation database and publishes clang-tidy diagnostics over LSP. `clangd --check` alone cannot show this, because it only prints errors.
+- [x] Zed started from the Start menu: go-to-definition, clang-tidy diagnostics and format-on-save work, and every task runs.
+- [x] `clang-format --dry-run --Werror` is clean on `src/` and `tests/`.
 
 ## What DOD bought or cost
 
-To be written at the end of M0.
+M0 has no tables or systems, so this is about structure, not data layout.
+
+**Bought:** the sim builds and tests headless, with no Raylib in its link line. The seam is enforced by the build: `raylib.h` fails to compile outside `src/platform/`, so rule 7 needs no review to hold.
+
+**Cost:** one extra library target, and placeholder `Tables` and `tick` that do nothing yet. `tick_smoke` proves the wiring only.

@@ -1,0 +1,8 @@
+[
+  { "label": "configure (debug)", "command": "cmake", "args": ["--preset", "debug"], "cwd": "$ZED_WORKTREE_ROOT" },
+  { "label": "build (debug)", "command": "cmake", "args": ["--build", "--preset", "debug"], "cwd": "$ZED_WORKTREE_ROOT" },
+  { "label": "test (debug)", "command": "ctest", "args": ["--preset", "debug"], "cwd": "$ZED_WORKTREE_ROOT" },
+  { "label": "test (asan)", "command": "cmake", "args": ["--workflow", "--preset", "asan"], "cwd": "$ZED_WORKTREE_ROOT" },
+  { "label": "run", "command": "./ddo_pong.exe", "cwd": "$ZED_WORKTREE_ROOT/build/debug", "use_new_terminal": true },
+  { "label": "tidy (full)", "command": "cmake", "args": ["--workflow", "--preset", "tidy"], "cwd": "$ZED_WORKTREE_ROOT" }
+]
