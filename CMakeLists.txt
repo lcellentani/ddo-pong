@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.25)
 project(ddo_pong LANGUAGES C CXX)
 
 option(DDO_TIDY "Run clang-tidy during build" OFF)
+option(DDO_SANITIZER_CANARIES "Add tests that prove the sanitizers are active" OFF)
 
 include(FetchContent)
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
@@ -33,7 +34,7 @@ target_link_libraries(ddo_pong PRIVATE ddo_core ddo_platform warnings)
 
 if(DDO_TIDY)
   set_target_properties(ddo_core ddo_platform ddo_pong PROPERTIES
-    CXX_CLANG_TIDY "clang-tidy")
+    CXX_CLANG_TIDY "clang-tidy;--warnings-as-errors=*")
 endif()
 
 enable_testing()

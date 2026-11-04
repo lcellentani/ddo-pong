@@ -22,6 +22,7 @@
       "inherits": "base",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
+        "DDO_SANITIZER_CANARIES": "ON",
         "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreadedDLL",
         "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer"
       }
@@ -35,12 +36,18 @@
     { "name": "tidy",    "configurePreset": "tidy" }
   ],
   "testPresets": [
-    { "name": "debug",   "configurePreset": "debug",   "output": { "outputOnFailure": true } },
-    { "name": "release", "configurePreset": "release", "output": { "outputOnFailure": true } },
+    {
+      "name": "test-base",
+      "hidden": true,
+      "output": { "outputOnFailure": true },
+      "execution": { "noTestsAction": "error" }
+    },
+    { "name": "debug",   "inherits": "test-base", "configurePreset": "debug" },
+    { "name": "release", "inherits": "test-base", "configurePreset": "release" },
     {
       "name": "asan",
+      "inherits": "test-base",
       "configurePreset": "asan",
-      "output": { "outputOnFailure": true },
       "environment": { "PATH": "C:/Program Files/LLVM/lib/clang/22/lib/windows;$penv{PATH}" }
     }
   ],

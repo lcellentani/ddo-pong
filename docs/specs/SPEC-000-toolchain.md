@@ -44,6 +44,9 @@ M0 has no tables or systems, so `Tables` is empty and `tick` is a no-op until la
 | 9 | `HANDOFF.md` at the repo root | Stays at `docs/ddo-pong-handoff.md` | Avoids moving the file; `CLAUDE.md` links to it |
 | 10 | `asan` flags have no recover setting | Add `-fno-sanitize-recover=all` | Measured: UBSan otherwise prints the error and exits 0, so `ctest` passes on real undefined behaviour |
 | 11 | `.clang-tidy` check list | Disable `readability-uppercase-literal-suffix` | It demands `0.0F`, but the project style writes `0.016f` |
+| 12 | Test presets have no `noTestsAction` | Set it to `error` in a hidden base test preset | Measured: `ctest` exits 0 with "No tests were found" on an unconfigured tree |
+| 13 | `CXX_CLANG_TIDY` is plain `clang-tidy` | Add `--warnings-as-errors=*` in CMake only | Measured: a warning printed once, then a rerun was clean with the bug still there. `.clang-tidy` is unchanged, so Zed still shows warnings |
+| 14 | Nothing proves sanitizers stay on | Add `asan_canary` and `ubsan_canary` tests to the `asan` preset | Measured: they fail if the sanitizer flags or `-fno-sanitize-recover=all` are removed |
 
 ## Acceptance
 
