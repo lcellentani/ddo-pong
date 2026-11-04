@@ -53,6 +53,14 @@
   ],
   "workflowPresets": [
     {
+      "name": "debug",
+      "steps": [
+        { "type": "configure", "name": "debug" },
+        { "type": "build",     "name": "debug" },
+        { "type": "test",      "name": "debug" }
+      ]
+    },
+    {
       "name": "asan",
       "steps": [
         { "type": "configure", "name": "asan" },

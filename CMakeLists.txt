@@ -32,10 +32,13 @@ target_link_libraries(ddo_platform PUBLIC ddo_core PRIVATE raylib warnings)
 add_executable(ddo_pong src/main.cpp)
 target_link_libraries(ddo_pong PRIVATE ddo_core ddo_platform warnings)
 
-if(DDO_TIDY)
-  set_target_properties(ddo_core ddo_platform ddo_pong PROPERTIES
-    CXX_CLANG_TIDY "clang-tidy;--warnings-as-errors=*")
-endif()
+add_custom_target(run COMMAND ddo_pong USES_TERMINAL)
 
 enable_testing()
 add_subdirectory(tests)
+
+if(DDO_TIDY)
+  set_target_properties(ddo_core ddo_platform ddo_pong tick_smoke PROPERTIES
+    CXX_CLANG_TIDY "clang-tidy;--warnings-as-errors=*")
+endif()
+

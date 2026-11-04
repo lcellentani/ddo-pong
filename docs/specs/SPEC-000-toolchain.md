@@ -40,13 +40,15 @@ M0 has no tables or systems, so `Tables` is empty and `tick` is a no-op until la
 | 5 | Tidy task chained with `&&` | `cmake --workflow --preset tidy` | One command, independent of Zed's shell |
 | 6 | `HeaderFilterRegex: '^.*/src/.*'` | `'.*[/\\]src[/\\].*'` | Measured: the original filter reports 0 warnings from a `src/` header on Windows, and this one reports 1 |
 | 7 | `ln -sf` compile_commands | Dropped | Developer Mode is off, and `.clangd` points at the database |
-| 8 | `./build/debug/ddo_pong` | `build/debug/ddo_pong.exe` | Windows binary name |
+| 8 | `run` task runs `./build/debug/ddo_pong` | `cmake --build --preset debug --target run` | Builds first, and handles the Windows binary name |
 | 9 | `HANDOFF.md` at the repo root | Stays at `docs/ddo-pong-handoff.md` | Avoids moving the file; `CLAUDE.md` links to it |
 | 10 | `asan` flags have no recover setting | Add `-fno-sanitize-recover=all` | Measured: UBSan otherwise prints the error and exits 0, so `ctest` passes on real undefined behaviour |
 | 11 | `.clang-tidy` check list | Disable `readability-uppercase-literal-suffix` | It demands `0.0F`, but the project style writes `0.016f` |
 | 12 | Test presets have no `noTestsAction` | Set it to `error` in a hidden base test preset | Measured: `ctest` exits 0 with "No tests were found" on an unconfigured tree |
 | 13 | `CXX_CLANG_TIDY` is plain `clang-tidy` | Add `--warnings-as-errors=*` in CMake only | Measured: a warning printed once, then a rerun was clean with the bug still there. `.clang-tidy` is unchanged, so Zed still shows warnings |
 | 14 | Nothing proves sanitizers stay on | Add `asan_canary` and `ubsan_canary` tests to the `asan` preset | Measured: they fail if the sanitizer flags or `-fno-sanitize-recover=all` are removed |
+| 15 | `test` task runs `ctest` alone | `cmake --workflow --preset debug` | Measured: `ctest` passes against a stale binary when the source no longer compiles |
+| 16 | Tidy covers `ddo_core`, `ddo_platform`, `ddo_pong` | Add `tick_smoke` | Measured: clang-tidy skipped test code, so the workflow exited 0 on a problem there. Rule 8 means tests grow with every system |
 
 ## Acceptance
 
@@ -64,6 +66,6 @@ M0 has no tables or systems, so `Tables` is empty and `tick` is a no-op until la
 
 M0 has no tables or systems, so this is about structure, not data layout.
 
-**Bought:** the sim builds and tests headless, with no Raylib in its link line. The seam is enforced by the build: `raylib.h` fails to compile outside `src/platform/`, so rule 7 needs no review to hold.
+**Bought:** the sim builds and tests headless, with no Raylib in its link line. Raylib is sealed by the build: `raylib.h` fails to compile outside `src/platform/`. The boundary is not fully enforced, though. `src/sim` can still include `platform/platform.h`: a call into it fails at link, but type-only use such as `InputState` would compile, so that direction still needs review.
 
 **Cost:** one extra library target, and placeholder `Tables` and `tick` that do nothing yet. `tick_smoke` proves the wiring only.
