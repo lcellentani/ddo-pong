@@ -2,6 +2,8 @@
 
 #include <raylib.h>
 
+#include "core/tables.h"
+
 namespace {
 
 constexpr int kTargetFps = 60;

@@ -25,12 +25,14 @@
         "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreadedDLL",
         "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer"
       }
-    }
+    },
+    { "name": "tidy",    "inherits": "base", "cacheVariables": { "CMAKE_BUILD_TYPE": "Debug", "DDO_TIDY": "ON" } }
   ],
   "buildPresets": [
     { "name": "debug",   "configurePreset": "debug" },
     { "name": "release", "configurePreset": "release" },
-    { "name": "asan",    "configurePreset": "asan" }
+    { "name": "asan",    "configurePreset": "asan" },
+    { "name": "tidy",    "configurePreset": "tidy" }
   ],
   "testPresets": [
     { "name": "debug",   "configurePreset": "debug",   "output": { "outputOnFailure": true } },
@@ -40,6 +42,15 @@
       "configurePreset": "asan",
       "output": { "outputOnFailure": true },
       "environment": { "PATH": "C:/Program Files/LLVM/lib/clang/22/lib/windows;$penv{PATH}" }
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "tidy",
+      "steps": [
+        { "type": "configure", "name": "tidy" },
+        { "type": "build",     "name": "tidy" }
+      ]
     }
   ]
 }

@@ -27,7 +27,7 @@ cmake --build --preset debug
 ctest --preset debug
 ```
 
-Presets: `debug`, `release`, `asan`. Definition of done for a milestone: handoff section 10.
+Presets: `debug`, `release`, `asan`. Run clang-tidy with `cmake --workflow --preset tidy`. Definition of done for a milestone: handoff section 10.
 
 ## Precedence
 

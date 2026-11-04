@@ -38,11 +38,12 @@ M0 has no tables or systems, so `Tables` is empty and `tick` is a no-op until la
 | 3 | `LANGUAGES CXX` | `LANGUAGES C CXX` | Raylib is C |
 | 4 | Tidy through `-DDDO_TIDY=ON` on `debug` | Separate `tidy` preset in `build/tidy` | The cached option would run tidy on every later debug build |
 | 5 | Tidy task chained with `&&` | `cmake --workflow --preset tidy` | One command, independent of Zed's shell |
-| 6 | `HeaderFilterRegex: '^.*/src/.*'` | `'.*[/\\]src[/\\].*'` | May miss backslash paths; checked in plan Task 5 |
+| 6 | `HeaderFilterRegex: '^.*/src/.*'` | `'.*[/\\]src[/\\].*'` | Measured: the original filter reports 0 warnings from a `src/` header on Windows, and this one reports 1 |
 | 7 | `ln -sf` compile_commands | Dropped | Developer Mode is off, and `.clangd` points at the database |
 | 8 | `./build/debug/ddo_pong` | `build/debug/ddo_pong.exe` | Windows binary name |
 | 9 | `HANDOFF.md` at the repo root | Stays at `docs/ddo-pong-handoff.md` | Avoids moving the file; `CLAUDE.md` links to it |
 | 10 | `asan` flags have no recover setting | Add `-fno-sanitize-recover=all` | Measured: UBSan otherwise prints the error and exits 0, so `ctest` passes on real undefined behaviour |
+| 11 | `.clang-tidy` check list | Disable `readability-uppercase-literal-suffix` | It demands `0.0F`, but the project style writes `0.016f` |
 
 ## Acceptance
 
