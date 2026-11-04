@@ -42,6 +42,7 @@ M0 has no tables or systems, so `Tables` is empty and `tick` is a no-op until la
 | 7 | `ln -sf` compile_commands | Dropped | Developer Mode is off, and `.clangd` points at the database |
 | 8 | `./build/debug/ddo_pong` | `build/debug/ddo_pong.exe` | Windows binary name |
 | 9 | `HANDOFF.md` at the repo root | Stays at `docs/ddo-pong-handoff.md` | Avoids moving the file; `CLAUDE.md` links to it |
+| 10 | `asan` flags have no recover setting | Add `-fno-sanitize-recover=all` | Measured: UBSan otherwise prints the error and exits 0, so `ctest` passes on real undefined behaviour |
 
 ## Acceptance
 
