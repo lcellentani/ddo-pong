@@ -1,0 +1,23 @@
+---
+# Mirrors the cpp-coding-standards skill's references/coding-style.md:
+# Google C++ Style Guide baseline, with 4-space indentation, a 120-column
+# limit, pointers/references bound to the type, one blank line between
+# definitions, and one-line bodies only for functions defined in a class.
+BasedOnStyle: Google
+Standard: c++20
+
+IndentWidth: 4
+ContinuationIndentWidth: 4
+AccessModifierOffset: -4
+ColumnLimit: 120
+
+PointerAlignment: Left
+ReferenceAlignment: Left
+DerivePointerAlignment: false
+
+BreakBeforeBraces: Attach
+SpaceBeforeParens: ControlStatements
+
+MaxEmptyLinesToKeep: 1
+SeparateDefinitionBlocks: Always
+AllowShortFunctionsOnASingleLine: Inline
